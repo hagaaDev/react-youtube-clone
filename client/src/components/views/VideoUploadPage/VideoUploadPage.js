@@ -47,7 +47,6 @@ export default function VideoUploadPage() {
     const config = {
       header: { "content-type": "multipart/form-data" },
     };
-    console.log(files);
     formData.append("file", files[0]);
 
     axios.post("/api/video/uploadfiles", formData, config).then((response) => {
