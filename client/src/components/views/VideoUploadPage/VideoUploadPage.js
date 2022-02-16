@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Typography, Button, Form, message, Input, Icon } from "antd";
 import Dropzone from "react-dropzone";
 
@@ -18,6 +19,7 @@ const CategoryOptions = [
 ];
 
 export default function VideoUploadPage() {
+  /* input 요소 value값 설정 */
   const [VideoTitle, setVideoTitle] = useState("");
   const [Description, setDescription] = useState("");
   const [Private, setPrivate] = useState(0);
@@ -39,6 +41,24 @@ export default function VideoUploadPage() {
     setCategory(e.currentTarget.value);
   };
 
+  /* Dropzone 파일 정보 넘겨주기 */
+  const onDrop = (files) => {
+    let formData = new FormData();
+    const config = {
+      header: { "content-type": "multipart/form-data" },
+    };
+    console.log(files);
+    formData.append("file", files[0]);
+
+    axios.post("/api/video/uploadfiles", formData, config).then((response) => {
+      if (response.data.success) {
+        console.log(response.data);
+      } else {
+        alert("failed to save the video in server");
+      }
+    });
+  };
+
   return (
     <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
@@ -49,7 +69,7 @@ export default function VideoUploadPage() {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           {/* Drop Zone */}
 
-          <Dropzone onDrop multiple maxSize>
+          <Dropzone onDrop={onDrop} multiple={false} maxSize={800000000}>
             {({ getRootProps, getInputProps }) => (
               <div
                 style={{
