@@ -19,7 +19,7 @@ const CategoryOptions = [
   { value: 3, label: "Pets & Animals" },
 ];
 
-export default function VideoUploadPage() {
+export default function VideoUploadPage(props) {
   /* input 요소 value값 설정 */
   const [VideoTitle, setVideoTitle] = useState("");
   const [Description, setDescription] = useState("");
@@ -97,7 +97,11 @@ export default function VideoUploadPage() {
     };
     axios.post("/api/video/uploadVideo", variables).then((response) => {
       if (response.data.success) {
-        console.log(response.data);
+        message.success("성공적으로 업로드를 했습니다.");
+
+        setTimeout(() => {
+          props.history.push("/");
+        }, 3000);
       } else {
         alert("비디오 업로드에 실패 했습니다.");
       }
