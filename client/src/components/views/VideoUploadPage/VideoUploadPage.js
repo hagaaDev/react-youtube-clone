@@ -42,7 +42,13 @@ export default function VideoUploadPage() {
   };
 
   /* Dropzone 파일 정보 넘겨주기 */
+  const [FilePath, setFilePath] = useState("");
+  const [Duration, setDuration] = useState("");
+  const [ThumbnailPath, setThumbnailPath] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+
   const onDrop = (files) => {
+    setIsUploading(true);
     let formData = new FormData();
     const config = {
       header: { "content-type": "multipart/form-data" },
@@ -51,7 +57,22 @@ export default function VideoUploadPage() {
 
     axios.post("/api/video/uploadfiles", formData, config).then((response) => {
       if (response.data.success) {
-        console.log(response.data);
+        let variable = {
+          url: response.data.filePath,
+          fileName: response.data.fileName,
+        };
+
+        setFilePath(response.data.filePath);
+
+        axios.post("/api/video/thumbnail", variable).then((response) => {
+          if (response.data.success) {
+            setDuration(response.data.fileDuration);
+            setThumbnailPath(response.data.url);
+            setIsUploading(false);
+          } else {
+            alert("썸네일 생성에 실패 했습니다.");
+          }
+        });
       } else {
         alert("failed to save the video in server");
       }
@@ -88,9 +109,29 @@ export default function VideoUploadPage() {
           </Dropzone>
 
           {/* Thumbnail */}
-          <div>
-            <img src alt />
-          </div>
+          {isUploading ? (
+            <div
+              style={{
+                width: "300px",
+                height: "240px",
+                border: "1px solid lightgray",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              Loading...
+            </div>
+          ) : (
+            ThumbnailPath && (
+              <div>
+                <img
+                  src={`http://localhost:5000/${ThumbnailPath}`}
+                  alt="thumbnail"
+                />
+              </div>
+            )
+          )}
         </div>
 
         <br />
