@@ -35,6 +35,8 @@ const upload = multer({ storage: storage }).single("file");
 //             Video
 //=================================
 
+/*********************************************  VideoUploadPage  ******************************************* */
+
 /* 클라이언트에서 받은 비디오를 서버에 저장 */
 router.post("/uploadfiles", (req, res) => {
   upload(req, res, (err) => {
@@ -105,6 +107,8 @@ router.post("/thumbnail", (req, res) => {
     });
 });
 
+/*********************************************  LandingPage  ******************************************* */
+
 /* 비디오 정보들을 DB에서 가져와서 클라이언트에 보내기 */
 router.get("/getVideos", (req, res) => {
   Video.find()
@@ -115,7 +119,9 @@ router.get("/getVideos", (req, res) => {
     });
 });
 
-/* 클라이언트에서 받은 비디오를 서버에 저장 */
+/*********************************************  VideoDetailPage  ******************************************* */
+
+/* 해당 id를 가진 비디오 정보를 클라이언트에 보내기 */
 router.post("/getVideoDetail", (req, res) => {
   Video.findOne({ _id: req.body.videoId })
     .populate("writer")
