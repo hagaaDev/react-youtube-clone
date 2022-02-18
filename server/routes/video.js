@@ -105,4 +105,14 @@ router.post("/thumbnail", (req, res) => {
     });
 });
 
+/* 비디오 정보들을 DB에서 가져와서 클라이언트에 보내기 */
+router.get("/getVideos", (req, res) => {
+  Video.find()
+    .populate("writer") // 모든 정보를 가져옴
+    .exec((err, videos) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).json({ success: true, videos });
+    });
+});
+
 module.exports = router;
