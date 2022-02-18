@@ -32,7 +32,9 @@ export default function VideoDetailPage(props) {
               controls
             />
 
-            <List.Item actions={[<Subscribe />]}>
+            <List.Item
+              actions={[<Subscribe userTo={VideoDetail.writer._id} />]}
+            >
               <List.Item.Meta
                 avatar={<Avatar src={VideoDetail.writer.image} />}
                 title={VideoDetail.title}
