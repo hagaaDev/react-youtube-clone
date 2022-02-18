@@ -34,4 +34,25 @@ router.post("/subscribed", (req, res) => {
   });
 });
 
+/* 구독버튼 눌렀을 때 이미 구독중이라면 구독취소 */
+router.post("/unSubscribe", (req, res) => {
+  Subscriber.findOneAndDelete({
+    userTo: req.body.userTo,
+    userFrom: req.body.userFrom,
+  }).exec((err, doc) => {
+    if (err) return res.status(400).json({ success: false, err });
+    res.status(200).json({ success: true, doc });
+  });
+});
+
+/* 구독버튼 눌렀을 때 이미 구독중이 아니라면 구독 */
+router.post("/subscribe", (req, res) => {
+  const subscribe = new Subscriber(req.body);
+
+  subscribe.save((err, dox) => {
+    if (err) return res.json({ success: false, err });
+    res.status(200).json({ success: true });
+  });
+});
+
 module.exports = router;
