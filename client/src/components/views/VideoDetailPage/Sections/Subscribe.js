@@ -71,7 +71,7 @@ export default function Subscribe(props) {
     <div>
       <button
         style={{
-          backgroundColor: `${Subscribed ? "#AAAAAA" : "#cc0000"}`,
+          backgroundColor: `${Subscribed ? "#cc0000" : "#AAAAAA"}`,
           borderRadius: "4px",
           color: "white",
           padding: "10px 16px",
