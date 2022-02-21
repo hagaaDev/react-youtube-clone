@@ -50,7 +50,7 @@ export default function VideoDetailPage(props) {
             </List.Item>
 
             {/* Comments */}
-            <Comment />
+            <Comment postId={videoId} />
           </div>
         </Col>
         <Col lg={6} xs={24}>

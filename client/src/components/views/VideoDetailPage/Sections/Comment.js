@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 
-export default function Comment() {
-  const videoId = props.match.params.videoId;
+export default function Comment(props) {
+  const videoId = props.postId;
   const user = useSelector((state) => state.user); // 리덕스를 이용하여 로그인유저 정보를 가져옴
   const [commentValue, setCommentValue] = useState("");
   const handleClick = (event) => {
@@ -15,11 +15,12 @@ export default function Comment() {
 
     const variables = {
       content: commentValue,
-      writer: user.data._id,
+      writer: user.userData._id,
       postId: videoId,
     };
     Axios.post("/api/comment/saveComment", variables).then((response) => {
       if (response.data.success) {
+        console.log(response.data.result);
       } else {
         alert("코멘트를 저장하지 못했습니다.");
       }
