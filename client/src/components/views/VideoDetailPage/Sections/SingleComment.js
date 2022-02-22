@@ -29,6 +29,7 @@ export default function SingleComment(props) {
       if (response.data.success) {
         console.log(response.data.result);
         props.refreshFunction(response.data.result);
+        setCommentValue("");
       } else {
         alert("코멘트를 저장하지 못했습니다.");
       }

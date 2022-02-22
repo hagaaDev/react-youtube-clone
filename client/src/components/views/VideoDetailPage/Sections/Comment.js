@@ -22,6 +22,7 @@ export default function Comment(props) {
     Axios.post("/api/comment/saveComment", variables).then((response) => {
       if (response.data.success) {
         props.refreshFunction(response.data.result);
+        setCommentValue("");
       } else {
         alert("코멘트를 저장하지 못했습니다.");
       }
