@@ -27,4 +27,14 @@ router.post("/saveComment", (req, res) => {
   });
 });
 
+/* videoDetailPage에 전체 댓글 정보 불러오기 */
+router.post("/getComments", (req, res) => {
+  Comment.find({ postId: req.body.videoId })
+    .populate("writer")
+    .exec((err, comments) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).json({ success: true, comments });
+    });
+});
+
 module.exports = router;
