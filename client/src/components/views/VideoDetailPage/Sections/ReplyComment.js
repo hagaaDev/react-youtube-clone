@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SingleComment from "./SingleComment";
 
 export default function ReplyComment(props) {
+  const [ChildCommentNumber, setChildCommentNumber] = useState(0);
+  const [openReplyComments, setOpenReplyComments] = useState(false);
+
+  useEffect(() => {
+    let commentNumber = 0;
+
+    props.commentLists.map((comment) => {
+      if (comment.responseTo === props.parentCommentId) {
+        commentNumber++;
+      }
+    });
+    setChildCommentNumber(commentNumber);
+  }, []);
+
   const renderReplyComment = (parentCommentId) => {
     props.commentLists.map((comment, index) => (
       <>
@@ -23,12 +37,22 @@ export default function ReplyComment(props) {
     ));
   };
 
+  const onHandleChange = () => {
+    setOpenReplyComments(!openReplyComments);
+  };
+
   return (
     <div>
-      <p style={{ fontSize: "14px", margin: 0, color: "gray" }} onClick>
-        View 1 more comment(s)
-      </p>
-      {renderReplyComment(props.parentCommentId)}
+      {ChildCommentNumber > 0 && (
+        <p
+          style={{ fontSize: "14px", margin: 0, color: "gray" }}
+          onClick={onHandleChange}
+        >
+          View {ChildCommentNumber} more comment(s)
+        </p>
+      )}
+
+      {openReplyComments && renderReplyComment(props.parentCommentId)}
     </div>
   );
 }
