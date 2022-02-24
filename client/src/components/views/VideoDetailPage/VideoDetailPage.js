@@ -4,6 +4,7 @@ import Axios from "axios";
 import SideVideo from "./Sections/SideVideo";
 import Subscribe from "./Sections/Subscribe";
 import Comment from "./Sections/Comment";
+import LikeDislikes from "./Sections/LikeDislikes";
 
 export default function VideoDetailPage(props) {
   const videoId = props.match.params.videoId;
@@ -54,7 +55,7 @@ export default function VideoDetailPage(props) {
               controls
             />
 
-            <List.Item actions={[subscribeButton]}>
+            <List.Item actions={[<LikeDislikes />, subscribeButton]}>
               <List.Item.Meta
                 avatar={<Avatar src={VideoDetail.writer.image} />}
                 title={VideoDetail.title}
