@@ -47,7 +47,11 @@ export default function Comment(props) {
                   comment={comment}
                   postId={videoId}
                 />
-                <ReplyComment />
+                <ReplyComment
+                  parentCommentId={comment._id}
+                  postId={videoId}
+                  commentLists={props.commentLists}
+                />
               </>
             )
         )}
