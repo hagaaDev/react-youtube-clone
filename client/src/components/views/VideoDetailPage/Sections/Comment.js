@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 import SingleComment from "./SingleComment";
+import ReplyComment from "./ReplyComment";
 
 export default function Comment(props) {
   const videoId = props.postId;
@@ -40,11 +41,14 @@ export default function Comment(props) {
         props.commentLists.map(
           (comment, index) =>
             !comment.responseTo && (
-              <SingleComment
-                refreshFunction={props.refreshFunction}
-                comment={comment}
-                postId={videoId}
-              />
+              <>
+                <SingleComment
+                  refreshFunction={props.refreshFunction}
+                  comment={comment}
+                  postId={videoId}
+                />
+                <ReplyComment />
+              </>
             )
         )}
 
