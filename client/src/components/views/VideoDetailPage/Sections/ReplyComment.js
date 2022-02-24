@@ -14,7 +14,7 @@ export default function ReplyComment(props) {
       }
     });
     setChildCommentNumber(commentNumber);
-  }, []);
+  }, [props.commentLists]);
 
   const renderReplyComment = (parentCommentId) =>
     props.commentLists.map((comment, index) => (
@@ -27,6 +27,7 @@ export default function ReplyComment(props) {
               postId={props.videoId}
             />
             <ReplyComment
+              refreshFunction={props.refreshFunction}
               commentLists={props.commentLists}
               postId={props.videoId}
               parentCommentId={comment._id}

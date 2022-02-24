@@ -48,6 +48,7 @@ export default function Comment(props) {
                   postId={videoId}
                 />
                 <ReplyComment
+                  refreshFunction={props.refreshFunction}
                   parentCommentId={comment._id}
                   postId={videoId}
                   commentLists={props.commentLists}
