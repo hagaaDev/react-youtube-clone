@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Axios from "axios";
 import { Comment, Avatar, Button, Input } from "antd";
 import { useSelector } from "react-redux";
+import LikeDislikes from "./LikeDislikes";
 
 export default function SingleComment(props) {
   const user = useSelector((state) => state.user); // 리덕스를 이용하여 로그인유저 정보를 가져옴
@@ -38,6 +39,10 @@ export default function SingleComment(props) {
   };
 
   const actions = [
+    <LikeDislikes
+      userId={localStorage.getItem("userId")}
+      commentId={props.comment._id}
+    />,
     <span onClick={onClickReplyOpen} key="comment-basic-reply-to">
       Reply to
     </span>,

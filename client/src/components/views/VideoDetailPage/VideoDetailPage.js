@@ -55,7 +55,16 @@ export default function VideoDetailPage(props) {
               controls
             />
 
-            <List.Item actions={[<LikeDislikes />, subscribeButton]}>
+            <List.Item
+              actions={[
+                <LikeDislikes
+                  video
+                  userID={localStorage.getItem("userId")}
+                  videoID={videoID}
+                />,
+                subscribeButton,
+              ]}
+            >
               <List.Item.Meta
                 avatar={<Avatar src={VideoDetail.writer.image} />}
                 title={VideoDetail.title}
