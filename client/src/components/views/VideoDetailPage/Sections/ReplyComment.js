@@ -16,11 +16,11 @@ export default function ReplyComment(props) {
     setChildCommentNumber(commentNumber);
   }, []);
 
-  const renderReplyComment = (parentCommentId) => {
+  const renderReplyComment = (parentCommentId) =>
     props.commentLists.map((comment, index) => (
       <>
         {comment.responseTo === parentCommentId && (
-          <div>
+          <div style={{ width: "80%", marginLeft: "40px" }}>
             <SingleComment
               refreshFunction={props.refreshFunction}
               comment={comment}
@@ -35,9 +35,8 @@ export default function ReplyComment(props) {
         )}
       </>
     ));
-  };
-
   const onHandleChange = () => {
+    console.log(openReplyComments);
     setOpenReplyComments(!openReplyComments);
   };
 
