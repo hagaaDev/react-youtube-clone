@@ -4,7 +4,9 @@ import Axios from "axios";
 
 export default function LikeDislikes(props) {
   const [Likes, setLikes] = useState(0);
+  const [DisLikes, setDisLikes] = useState(0);
   const [LikeAction, setLikeAction] = useState(null);
+  const [DisLikeAction, setDisLikeAction] = useState(null);
 
   let variable = {};
 
@@ -32,22 +34,48 @@ export default function LikeDislikes(props) {
         alert("Likes에 정보를 가져오지 못했습니다.");
       }
     });
+
+    Axios.post("/api/like/getDislikes", variable).then((response) => {
+      if (response.data.success) {
+        // 얼마나 많은 싫어요를 받았는지
+
+        setDisLikes(response.data.dislikes.length);
+
+        // 내가 이미 그 싫어요를 눌렀는지
+
+        response.data.dislikes.map((dislikes) => {
+          if (dislikes.userId === props.userId) {
+            setDisLikeAction("disliked");
+          }
+        });
+      } else {
+        alert("DisLikes에 정보를 가져오지 못했습니다.");
+      }
+    });
   }, []);
 
   return (
     <div>
       <span key="comment-basic-like">
         <Tooltip title="Like">
-          <Icon type="like" theme="filled" onClick />
+          <Icon
+            type="like"
+            theme={LikeAction === "liked" ? "filled" : "outlined"}
+            onClick
+          />
         </Tooltip>
-        <span style={{ paddingLeft: "8px", cursor: "auto" }}> 1 </span>
+        <span style={{ paddingLeft: "8px", cursor: "auto" }}> {Likes} </span>
       </span>
 
       <span key="comment-basic-dislike">
         <Tooltip title="Dislike">
-          <Icon type="dislike" theme="outlined" onClick />
+          <Icon
+            type="dislike"
+            theme={DisLikeAction === "disliked" ? "filled" : "outlined"}
+            onClick
+          />
         </Tooltip>
-        <span style={{ paddingLeft: "8px", cursor: "auto" }}> 1 </span>
+        <span style={{ paddingLeft: "8px", cursor: "auto" }}> {DisLikes} </span>
       </span>
     </div>
   );

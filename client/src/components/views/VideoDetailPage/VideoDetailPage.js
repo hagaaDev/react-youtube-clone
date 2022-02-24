@@ -60,7 +60,7 @@ export default function VideoDetailPage(props) {
                 <LikeDislikes
                   video
                   userID={localStorage.getItem("userId")}
-                  videoID={videoID}
+                  videoID={videoId}
                 />,
                 subscribeButton,
               ]}
