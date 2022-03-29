@@ -6,20 +6,24 @@ import moment from "moment";
 const { Title } = Typography;
 const { Meta } = Card;
 
-function LandingPage() {
-  // mongoDB에서 video데이터 가져오기
-
+export default function SubscriptionPage() {
   const [Video, setVideo] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/video/getVideos").then((response) => {
-      if (response.data.success) {
-        console.log(response.data);
-        setVideo(response.data.videos);
-      } else {
-        alert("비디오 가져오기를 실패 했습니다.");
-      }
-    });
+    const subscriptionVariables = {
+      userFrom: localStorage.getItem("userId"),
+    };
+
+    axios
+      .post("/api/video/getSubscriptionVideos", subscriptionVariables)
+      .then((response) => {
+        if (response.data.success) {
+          console.log(response.data.videos);
+          setVideo(response.data.videos);
+        } else {
+          alert("비디오 가져오기를 실패 했습니다.");
+        }
+      });
   }, []);
 
   const renderCards = Video.map((video, index) => {
@@ -59,11 +63,9 @@ function LandingPage() {
   });
   return (
     <div style={{ width: "85%", margin: "3rem auto" }}>
-      <Title level={2}> Recommended </Title>
+      <Title level={2}> Subscription </Title>
       <hr />
       <Row gutter={[32, 16]}>{renderCards}</Row>
     </div>
   );
 }
-
-export default LandingPage;
